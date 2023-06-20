@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>点名系统</title>
+	<!-- 引入 Bootstrap 样式表 -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container mt-5">
+		<h1>学生名单</h1>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>姓名</th>
+					<th>已到</th>
+				</tr>
+			</thead>
+			<tbody id="students"></tbody>
+		</table>
+
+		<div class="row">
+			<div class="col-md-6">
+				<h2>未到学生名单</h2>
+				<ul id="absent"></ul>
+			</div>
+			<div class="col-md-6">
+				<h2>已到学生名单</h2>
+				<ul id="present"></ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- 引入 jQuery 和 Bootstrap JavaScript 库 -->
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<script>
+		// 学生名单数组
+		var students = [
+    {name: "周昊腾", present: false},
+    {name: "周沐锋", present: false},
+    {name: "周雨倩", present: false},
+    {name: "郑浩栋", present: false},
+    {name: "赵毅航", present: false},
+    {name: "赵希哲", present: false},
+    {name: "张雅", present: false},
+    {name: "张凯乐", present: false},
+    {name: "张彬", present: false},
+    {name: "袁通豪", present: false},
+    {name: "杨囡", present: false},
+    {name: ".相云飞", present: false},
+    {name: "吴甲龙", present: false},
+    {name: "王鑫", present: false},
+    {name: "王艺超", present: false},
+    {name: "王思颖", present: false},
+    {name: "王辉", present: false},
+    {name: "王晨", present: false},
+    {name: "王常锋", present: false},
+    {name: "田智元", present: false},
+    {name: "谭金豪", present: false},
+    {name: "孙一淦", present: false},
+    {name: "孙金博", present: false},
+    {name: "秦昊锋", present: false},
+    {name: "牛帮", present: false},
+    {name: "罗琪", present: false},
+    {name: "罗先辰", present: false},
+    {name: "罗骏哲", present: false},
+    {name: "刘一诺", present: false},
+    {name: "刘洋", present: false},
+    {name: "刘伟伟", present: false},
+    {name: "刘圣东", present: false},
+    {name: "刘家丽", present: false},
+    {name: "李-行", present: false},
+    {name: "李文杰", present: false},
+    {name: "李俊杰", present: false},
+    {name: "李迪奥", present: false},
+    {name: "贾旭辉", present: false},
+    {name: "贾晨艺", present: false},
+    {name: "郝盼", present: false},
+    {name: "郭远轩", present: false},
+    {name: "苟红瑶", present: false},
+    {name: "党钰玺", present: false},
+    {name: "崔国庆", present: false},
+    {name: "曹森", present: false},
+    {name: "白浩琪", present: false}
+];
+
+	
+
+		// 更新学生名单
+		function updateStudentsList() {
+			var studentsTableBody = $("#students");
+			studentsTableBody.empty();
+			for (var i = 0; i < students.length; i++) {
+				var student = students[i];
+				var row = $("<tr></tr>");
+				row.append("<td>" + student.name + "</td>");
+				row.append("<td><input type='checkbox' " + (student.present ? "checked" : "") + "></td>");
+				row.find("input").on("change", function() {
+					var index = $(this).closest("tr").index();
+					students[index].present = $(this).prop("checked");
+					updateRollCallStatus();
+				});
+				studentsTableBody.append(row);
+			}
+			updateRollCallStatus();
+		}
+
+		// 更新点名状态
+		function updateRollCallStatus() {
+			var absentList = $("#absent");
+			var presentList = $("#present");
+			absentList.empty();
+			presentList.empty();
+
+			for (var i = 0; i < students.length; i++) {
+				var student = students[i];
+				if (student.present) {
+					presentList.append("<li class='text-success'>" + student.name + "</li>");
+				} else {
+					absentList.append("<li class='text-danger'>" + student.name + "</li>");
+				}
+			}
+		}
+
+		// 初始化页面
+		updateStudentsList();
+	</script>
+</body>
+</html>
